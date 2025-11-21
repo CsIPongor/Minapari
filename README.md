@@ -28,6 +28,8 @@ pip install -e ".[pyqt5]"  # or pyqt6, pyside2, pyside6
 
 ## Usage
 
+### Standalone Viewer
+
 ```python
 import numpy as np
 from minapari import Viewer
@@ -42,6 +44,39 @@ viewer.add_image(data, name='random')
 # Show viewer (blocking)
 viewer.show(block=True)
 ```
+
+### Dockable Widget (Embedded in Qt Application)
+
+```python
+from qtpy.QtWidgets import QMainWindow, QApplication
+from qtpy.QtCore import Qt
+from minapari.dockable import MinapariDockWidget, setup_shared_context
+import numpy as np
+
+app = QApplication([])
+
+# IMPORTANT: Setup shared OpenGL context BEFORE creating viewers
+# This prevents context loss when undocking
+setup_shared_context()
+
+# Create main window
+main_window = QMainWindow()
+main_window.setWindowTitle("My Application")
+main_window.resize(1200, 800)
+
+# Create dockable minapari viewer
+dock = MinapariDockWidget(main_window, title="Image Viewer")
+main_window.addDockWidget(Qt.RightDockWidgetArea, dock)
+
+# Add images
+dock.viewer.add_image(np.random.random((512, 512)), name='random')
+
+main_window.show()
+app.exec_()
+```
+
+The `setup_shared_context()` call creates a shared OpenGL context that survives
+dock widget undocking/redocking without losing the rendering context.
 
 ## Performance
 

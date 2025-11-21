@@ -104,6 +104,10 @@ class VispyCanvas:
     ----------
     viewer : napari.components.ViewerModel
         Napari viewer containing the rendered scene, layers, and controls.
+    shared : vispy.app.Canvas or vispy.gloo.GLContext, optional
+        An existing canvas or context to share OpenGL resources with. This is
+        critical for dockable widgets to survive undocking without losing the
+        OpenGL context.
 
     Attributes
     ----------
@@ -139,12 +143,28 @@ class VispyCanvas:
     """
 
     _instances: WeakSet[VispyCanvas] = WeakSet()
+    _shared_context = None  # Class-level shared context for all instances
+
+    @classmethod
+    def set_shared_context(cls, context):
+        """Set a shared OpenGL context for all VispyCanvas instances.
+
+        Call this once at application startup to ensure all canvases share
+        the same OpenGL context, which prevents context loss when undocking.
+
+        Parameters
+        ----------
+        context : vispy.app.Canvas or vispy.gloo.GLContext
+            The shared context to use for all canvases.
+        """
+        cls._shared_context = context
 
     def __init__(
         self,
         viewer: ViewerModel,
         key_map_handler: KeymapHandler,
         *args,
+        shared=None,
         **kwargs,
     ) -> None:
         # Since the base class is frozen we must create this attribute
@@ -153,8 +173,11 @@ class VispyCanvas:
         self._last_theme_color = None
         self._background_color_override = None
         self.viewer = viewer
+
+        # Use provided shared context, class-level shared context, or None
+        shared_ctx = shared or self._shared_context
         self._scene_canvas = NapariSceneCanvas(
-            *args, keys=None, vsync=True, **kwargs
+            *args, keys=None, vsync=True, shared=shared_ctx, **kwargs
         )
 
         self.view = self.central_widget.add_view(border_width=0)
