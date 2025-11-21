@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minapari"
+version = "0.1.0"
+description = "Minimal napari - stripped down image viewer"
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.10"
+authors = [
+    {name = "Minapari Contributors"}
+]
+keywords = ["imaging", "visualization", "microscopy"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+
+dependencies = [
+    # Core
+    "numpy>=1.24",
+    "scipy>=1.10",
+
+    # GUI
+    "qtpy>=2.3.1",
+    "superqt>=0.6.1",
+
+    # Rendering
+    "vispy>=0.14.1,<0.16",
+
+    # Data handling
+    "dask[array]>=2021.10.0",
+
+    # Models/validation
+    "pydantic>=2.0",
+    "psygnal>=0.9.0",
+    "app-model>=0.2.0",
+
+    # Utilities
+    "cachey>=0.2.1",
+    "pint>=0.17",
+    "wrapt>=1.14.0",
+    "numpydoc>=1.4.0",
+]
+
+[project.optional-dependencies]
+pyqt5 = ["PyQt5>=5.15.0"]
+pyqt6 = ["PyQt6>=6.2.0"]
+pyside2 = ["PySide2>=5.15.0"]
+pyside6 = ["PySide6>=6.2.0"]
+
+testing = [
+    "pytest>=7.0.0",
+    "pytest-qt>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/napari/napari"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+minapari = [
+    "resources/**/*",
+    "*.pyi",
+]
