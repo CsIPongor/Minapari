@@ -57,7 +57,7 @@ from minapari.utils.geometry import (
     intersect_line_with_axis_aligned_bounding_box_3d,
 )
 from minapari.utils.key_bindings import KeymapProvider
-from minapari.utils.migrations import _DeprecatingDict
+from minapari.utils.events.migrations import _DeprecatingDict
 from minapari.utils.misc import StringEnum
 from minapari.utils.mouse_bindings import MousemapProvider
 from minapari.utils.naming import magic_name

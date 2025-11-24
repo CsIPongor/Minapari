@@ -21,7 +21,7 @@ from minapari.utils.colormaps.standardize_color import transform_color
 from minapari.utils.compat import StrEnum
 from minapari.utils.events import EventedModel
 from minapari.utils.events.custom_types import Array
-from minapari.utils.migrations import deprecated_class_name
+from minapari.utils.events.migrations import deprecated_class_name
 from minapari.utils.translations import trans
 
 if TYPE_CHECKING:

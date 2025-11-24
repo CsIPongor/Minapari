@@ -20,7 +20,7 @@ import numpy as np
 # with undefined Context.
 from app_model.expressions import Context
 
-from napari import layers
+from minapari import layers
 from minapari._pydantic_compat import Extra, Field, PrivateAttr, validator
 from minapari.components._layer_slicer import _LayerSlicer
 from minapari.components._viewer_mouse_bindings import (
@@ -49,24 +49,24 @@ from minapari.errors import (
 )
 from minapari.layers import (
     Image,
-    Labels,
+    # Labels,  # Not implemented yet
     Layer,
-    Points,
-    Shapes,
-    Surface,
-    Tracks,
-    Vectors,
+    # Points,  # Not implemented yet
+    # Shapes,  # Not implemented yet
+    # Surface,  # Not implemented yet
+    # Tracks,  # Not implemented yet
+    # Vectors,  # Not implemented yet
 )
 from minapari.layers._source import Source, layer_source
 from minapari.layers.image._image_key_bindings import image_fun_to_mode
 from minapari.layers.image._image_utils import guess_labels
-from minapari.layers.labels._labels_key_bindings import labels_fun_to_mode
-from minapari.layers.points._points_key_bindings import points_fun_to_mode
-from minapari.layers.shapes._shapes_key_bindings import shapes_fun_to_mode
-from minapari.layers.surface._surface_key_bindings import surface_fun_to_mode
-from minapari.layers.tracks._tracks_key_bindings import tracks_fun_to_mode
+# from minapari.layers.labels._labels_key_bindings import labels_fun_to_mode
+# from minapari.layers.points._points_key_bindings import points_fun_to_mode
+# from minapari.layers.shapes._shapes_key_bindings import shapes_fun_to_mode
+# from minapari.layers.surface._surface_key_bindings import surface_fun_to_mode
+# from minapari.layers.tracks._tracks_key_bindings import tracks_fun_to_mode
 from minapari.layers.utils.stack_utils import split_channels
-from minapari.layers.vectors._vectors_key_bindings import vectors_fun_to_mode
+# from minapari.layers.vectors._vectors_key_bindings import vectors_fun_to_mode
 from minapari.plugins.utils import get_potential_readers, get_preferred_reader
 from minapari.settings import get_settings
 from minapari.types import (
@@ -847,13 +847,13 @@ class ViewerModel(KeymapProvider, MousemapProvider, EventedModel):
         Update layer help text base on layer mode.
         """
         layer_to_func_and_mode: dict[type[Layer], list] = {
-            Points: points_fun_to_mode,
-            Labels: labels_fun_to_mode,
-            Shapes: shapes_fun_to_mode,
-            Vectors: vectors_fun_to_mode,
+            # Points: points_fun_to_mode,  # Not implemented yet
+            # Labels: labels_fun_to_mode,  # Not implemented yet
+            # Shapes: shapes_fun_to_mode,  # Not implemented yet
+            # Vectors: vectors_fun_to_mode,  # Not implemented yet
             Image: image_fun_to_mode,
-            Surface: surface_fun_to_mode,
-            Tracks: tracks_fun_to_mode,
+            # Surface: surface_fun_to_mode,  # Not implemented yet
+            # Tracks: tracks_fun_to_mode,  # Not implemented yet
         }
 
         help_li = []
@@ -1897,13 +1897,14 @@ def valid_add_kwargs() -> dict[str, set[str]]:
     return valid
 
 
-for _layer in (
-    layers.Labels,
-    layers.Points,
-    layers.Shapes,
-    layers.Surface,
-    layers.Tracks,
-    layers.Vectors,
-):
-    func = create_add_method(_layer)
-    setattr(ViewerModel, func.__name__, func)
+# Commented out unimplemented layer types
+# for _layer in (
+#     layers.Labels,
+#     layers.Points,
+#     layers.Shapes,
+#     layers.Surface,
+#     layers.Tracks,
+#     layers.Vectors,
+# ):
+#     func = create_add_method(_layer)
+#     setattr(ViewerModel, func.__name__, func)
